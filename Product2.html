@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Details</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid red;
+            padding: 8px;
+        }
+        th {
+            background-color: greenyellow;
+        }
+    </style>
+</head>
+<body>
+    <h2>Product <Details></h2>
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Images</th>
+                <th>Base Price</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table content will be dynamically added here -->
+        </tbody>
+    </table>
+    <script>
+        // Sample product data
+        const products = [
+            {
+                productName: ' Hp',
+                productImage: '../Myimages/Hp.jpg',
+                basePrice: 45000,
+                quantity: 5
+            },
+            {
+                productName: ' Apple',
+                productImage: '../Myimages/Apple.jpg',
+                basePrice: 50000,
+                quantity: 2
+            },
+            {
+                productName: ' Asus',
+                productImage: '../Myimages/Asus.jpg',
+                basePrice: 46000,
+                quantity: 3
+            },
+            {
+                productName: ' Dell',
+                productImage: '../Myimages/Dell.png',
+                basePrice: 30000,
+                quantity: 4
+            },
+            // Add more products here if needed
+        ];
+
+        // Populate the table with product data
+        const productTable = document.getElementById('productTable').getElementsByTagName('tbody')[0];
+
+        products.forEach(product => {
+            const row = productTable.insertRow();
+
+            const productNameCell = row.insertCell(0);
+            productNameCell.innerHTML = product.productName;
+
+            const productImageCell = row.insertCell(1);
+            productImageCell.innerHTML = `<img src="${product.productImage}" width="100" height="100">`;
+
+            const basePriceCell = row.insertCell(2);
+            basePriceCell.innerHTML = product.basePrice;
+
+            const quantityCell = row.insertCell(3);
+            quantityCell.innerHTML = product.quantity;
+
+            const amountCell = row.insertCell(4);
+            amountCell.innerHTML = product.basePrice * product.quantity;
+
+            const totalAmountCell = row.insertCell(5);
+            totalAmountCell.innerHTML = ''; // Leave it empty for now, we will calculate it later
+        });
+
+        // Calculate and fill the Total Amount cells
+        const totalAmountCells = document.querySelectorAll('td:nth-child(6)');
+        for (let i = 0; i < totalAmountCells.length; i++) {
+            const amountCell = totalAmountCells[i].previousSibling;
+            const quantityCell = amountCell.previousSibling;
+            const basePriceCell = quantityCell.previousSibling;
+
+            const basePrice = parseFloat(basePriceCell.innerText);
+            const quantity = parseFloat(quantityCell.innerText);
+            const amount = basePrice * quantity;
+
+            totalAmountCells[i].innerText = amount;
+        }
+    </script>
+</body>
+</html>
